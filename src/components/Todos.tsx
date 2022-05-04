@@ -1,5 +1,7 @@
 import React from "react";
-import Todo from "../models/todo";
+import { useContext } from "react";
+//import Todo from "../models/todo";
+import { TodosContext } from "../store/todos-context";
 import TodoItem from "./TodoItem";
 // Creating a Todo App <ul></ul>
     // Must assign props type explicitly or else adjust tsconfig.json
@@ -12,8 +14,9 @@ import TodoItem from "./TodoItem";
 // Adding CSS classes same in react and TS as basic react
 import classes from "./TodoItem.module.css";
 
-const Todos: React.FC<{ items: Todo[]; onRemoveTodo: (todoId: string) => void }> = (props) => {
-
+//  removed props and replaced with todosCtx or the context
+const Todos: React.FC = () => {
+    const todosCtx = useContext(TodosContext)
     return ( 
     <ul className={classes.todos}>
         {/*  Make these dynamic and removable/addable later */}
@@ -26,7 +29,10 @@ const Todos: React.FC<{ items: Todo[]; onRemoveTodo: (todoId: string) => void }>
         
         {/* the .bind() preconfigures a function for execution. 1st param is setting the value of the this keyword. 
         2nd param is is the 1st argument onRemoveTodo() Function will receive or item.id being equal to todoId param  */}
-        {props.items.map(item => <TodoItem key={item.id} text={item.text} onRemoveTodo={props.onRemoveTodo.bind(null, item.id)}/>)}
+        {/* used context instead of sending up via multiple levels which is this:  props.onRemoveTodo.bind(null, item.id).
+        Still kept .bind(null, item.id) to get right id eventually*/}
+
+        {todosCtx.items.map(item => <TodoItem key={item.id} text={item.text} onRemoveTodo={todosCtx.removeTodo.bind(null, item.id)}/>)}
     </ul>
     );
 }

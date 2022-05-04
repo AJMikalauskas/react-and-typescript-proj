@@ -1,15 +1,23 @@
-{
+ {
   "compilerOptions": {
+    // target controls the JS version to which TS is transformed
     "target": "es5",
+    // These libraries are not imported but come with Typescript, 
+      // "dom" library includes <HTMLInputElement>
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    // allowJs is a boolean to determine whether JS files/imports
+      // are fine to be in a TS project
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    // When on true, has strictest rules of TS,
+      // results in errors such as:
+        // "parameter event implicitly has 'any' type"
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,

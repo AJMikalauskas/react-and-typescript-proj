@@ -2,14 +2,20 @@
     // use refs/userRef, can also use state tracking but will be used somewhere else later in this project
 //import React from "react";
 import React, { useRef } from "react";
+import { useContext } from "react";
+import { TodosContext } from "../store/todos-context";
 // Adding Css classes is literally the same in react and TS
-import classes from "./NewTodo.module.css"
+import classes from "./NewTodo.module.css";
 
     // React.FC<{}> is the way to add props and make a component a functional component
         // can add onAddTodo as param with function as the type -> syntax for a type of function is () =>
             // params are passed into () with their own respective types, and after the => is what is to be returned, so in this instance
                 // nothing is going to be returned so we can use void
-const NewTodo:React.FC<{onAddTodo: (todoName: string) => void}> = (props) => {
+// removed props and replaced with todosCtx or the context/useContext() hook
+const NewTodo:React.FC = () => {
+    // context const
+    const todosCtx = useContext(TodosContext);
+
     // Also need to add starting value just in case this ref has been added to another HTML element
         // cannot use "" instead use null becasue input can have many different primitive types written in it
     const todoTextInputRef = useRef<HTMLInputElement>(null);
@@ -32,8 +38,8 @@ const NewTodo:React.FC<{onAddTodo: (todoName: string) => void}> = (props) => {
             return;
         }
 
-        // Send this data up via props to a function in App.tsx
-        props.onAddTodo(enteredText);
+        // Send this data up via props to a function in App.tsx -> not correct anymore, rather, uses context which has same logic as before
+        todosCtx.addTodo(enteredText);
     }
     return (
         <form onSubmit={submitHandler} className={classes.form}>
