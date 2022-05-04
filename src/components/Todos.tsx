@@ -12,13 +12,7 @@ import TodoItem from "./TodoItem";
 // Adding CSS classes same in react and TS as basic react
 import classes from "./TodoItem.module.css";
 
-const Todos: React.FC<{ items: Todo[] }> = (props) => {
-
-    // remove todo item by onclick which leads to this function by props
-    const removeTodoHandler = () => 
-    {
-        const itemToBeDeleted = props.items.find((removedItem) => removedItem.id)
-    }
+const Todos: React.FC<{ items: Todo[]; onRemoveTodo: (todoId: string) => void }> = (props) => {
 
     return ( 
     <ul className={classes.todos}>
@@ -30,7 +24,9 @@ const Todos: React.FC<{ items: Todo[] }> = (props) => {
         {/* React.FC in TodoItem.ts is very special and helpful. <li> items require a key property, it's not part of 
         the props in TodoItem.tsx, but React,FC helps to see the special needed property in <li> items */}
         
-        {props.items.map(item => <TodoItem key={item.id} text={item.text} onRemoveTodo={removeTodoHandler}/>)}
+        {/* the .bind() preconfigures a function for execution. 1st param is setting the value of the this keyword. 
+        2nd param is is the 1st argument onRemoveTodo() Function will receive or item.id being equal to todoId param  */}
+        {props.items.map(item => <TodoItem key={item.id} text={item.text} onRemoveTodo={props.onRemoveTodo.bind(null, item.id)}/>)}
     </ul>
     );
 }

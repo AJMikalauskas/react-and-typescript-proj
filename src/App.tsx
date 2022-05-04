@@ -20,12 +20,25 @@ function App() {
     setTodos((prevTodos) => { return prevTodos.concat(addingNewTodo)});
   }
 
+
+  // Remove Todo Handler Function
+  const removeTodoHandler = (todoId: string) => {
+    // filter out the todo item which has the same id as the passed in param -> runs check againt all todo items and creates new array from filtered Array
+      // similar logic to add Todo Handler above
+        // need to pass in id as param part of props for both TodoItem.tsx and Todos.tsx
+    setTodos((prevTodos) => {
+      return prevTodos.filter(todo => todo.id !== todoId);
+    });
+  };
+
   return (
     <div>
-      <NewTodo onAddTodo={addTodoHandler}/>
+      <NewTodo onAddTodo={addTodoHandler}/> 
       {/* Expects an items props from Todos or else error will result  -> we need to changes items from a string[] to a Todo[],
-      since the Todo object is now the array type we are expecting.*/}
-      <Todos items={todos}/>
+      since the Todo object is now the array type we are expecting.*/}\
+      {/*  add removeTodoHandler function to handle the props of onRemoveTodo, will eventually replace with context API -> error results originally since param not passed in as part of props in 
+      Todos.tsx and TodoItem.tsx */}
+      <Todos items={todos} onRemoveTodo={removeTodoHandler}/>
     </div>
   );
 }
